@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "README.md"]
   spec.add_dependency 'jwt', '~> 2.1.0'
-  spec.add_dependency 'rails', '~> 5.2.3'
+  spec.add_dependency 'rails', '>= 5.2.3'
   spec.add_development_dependency 'minitest-ci', '~> 3.4.0'
   spec.add_development_dependency 'mocha', '~> 1.8.0'
   spec.add_development_dependency 'rubocop', '~> 0.68.1'
