@@ -24,6 +24,20 @@ The following functionalities are available:
 
 All non local requests are blocked by default. In case it detects one it will give you suggestion how to successfully stub it.
 
+### Easily manage your environment
+
+Block helper to easily modify/stub ENV variables is available.
+
+```ruby
+test "something" do
+  puts ENV["SOME_VAR"] # => "original value"
+  with_modified_env SOME_VAR: "modified value" do
+    puts ENV["SOME_VAR"] # => "modified value"
+  end
+  puts ENV["SOME_VAR"] # => "original value"
+end
+```
+
 ### JWT authentication
 
 We use a JSON Web Token (JWT) to authenticate all calls to our container services.
