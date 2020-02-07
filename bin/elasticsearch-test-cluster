@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require "dotenv"
-Dotenv.load
+Dotenv.load(".env.test.local")
 
 action = ARGV[0]
 raise "Action not provided. Usage `bundle exec elasticsearch-test-cluster (start|stop|status)`" if action.nil?

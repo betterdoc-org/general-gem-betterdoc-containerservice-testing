@@ -7,12 +7,10 @@ module Betterdoc
       extend ActiveSupport::Concern
       include Minitest::Hooks
 
-      TEST_CLUSTER_PORT = ENV["TEST_CLUSTER_PORT"] || "9250"
-      TEST_CLUSTER_ELASTICSEARCH_URL = "http://localhost:#{TEST_CLUSTER_PORT}".freeze
 
       # Sets ELASTICSEARCH_URL to the one configured for test cluster
       def around
-        ClimateControl.modify(ELASTICSEARCH_URL: TEST_CLUSTER_ELASTICSEARCH_URL) do
+        ClimateControl.modify(ELASTICSEARCH_URL: elasticsearch_url) do
           super
         end
       end
@@ -20,7 +18,15 @@ module Betterdoc
       private
 
       def elasticsearch
-        @elasticsearch ||= Elasticsearch::Client.new(url: TEST_CLUSTER_ELASTICSEARCH_URL)
+        @elasticsearch ||= Elasticsearch::Client.new(url: elasticsearch_url)
+      end
+
+      def elasticsearch_port
+        ENV["TEST_CLUSTER_PORT"] || "9250"
+      end
+
+      def elasticsearch_url
+        "http://localhost:#{elasticsearch_port}"
       end
 
       # Adds document with provided values to provided Elasticsearch index
