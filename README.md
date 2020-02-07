@@ -61,6 +61,8 @@ get "/something", headers: { "Authorization" => nil }
 This gem offers two ways of testing Elasticsearch related scenarios. In most cases you should go with stubbing the ES calls cause it is much faster and simpler.
 Test cluster option is slower and more complicated to setup so use it only when you need to test that ES is returning currect results.
 
+If you have `elasticsearch-ruby` gem in your Gemfile support for testing Elasticsearch will be automatically required.
+
 #### Stub Elasticsearch calls
 
 Calling `with_stubbed_elasticsearch` block helper will stub all calls to Elasticsearch service and return results you pass as hits argument.
