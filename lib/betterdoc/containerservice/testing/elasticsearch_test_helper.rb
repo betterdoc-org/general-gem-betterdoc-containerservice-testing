@@ -1,6 +1,5 @@
 require "climate_control"
 require "minitest/hooks/test"
-require "elasticsearch/extensions/test/cluster"
 
 module Betterdoc
   module Containerservice
@@ -89,7 +88,12 @@ module Betterdoc
       # is running in the background all the time and does not have to be started
       # stoped each time you run tests.
       def with_elasticsearch_test_cluster(options = {})
-        raise "Please start Elasticsearch test cluster with `bin/elasticsearch-test-cluster start`" unless Elasticsearch::Extensions::Test::Cluster.running?
+        begin
+          require "elasticsearch/extensions/test/cluster"
+        rescue LoadError => e
+          raise LoadError, "#{e.message}\nYou need to have `elasticsearch-extensions` gem installed to be able to test with test cluster."
+        end
+        raise "Please start Elasticsearch test cluster with `bundle exec elasticsearch-test-cluster start`" unless Elasticsearch::Extensions::Test::Cluster.running?
 
         safe_create_index(options[:index]) if options[:index].present?
         yield
