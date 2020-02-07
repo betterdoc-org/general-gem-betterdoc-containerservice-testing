@@ -42,7 +42,7 @@ end
 
 We use a JSON Web Token (JWT) to authenticate all calls to our container services.
 
-To allow easy testing and make sure that you do not have to think about JWT original `ActionDispatch::IntegrationTest` methods that simulate requests (`delete, get, head, patch, post, put`) are overwritten so that header with valid JWT token is always added to the request.
+To allow easy testing and make sure that you do not have to think about JWT, original `ActionDispatch::IntegrationTest` methods that simulate requests (`delete, get, head, patch, post, put`) are overwritten so that header with valid JWT token is always added to the request.
 
 ```ruby
 # Authorization header with valid JWT token will be automatically added, no need to worry about it
@@ -120,5 +120,32 @@ end
 This option expect ES test cluster running, proper indexes to be created, documents to be indexed so it is much more complicated to setup and slower but it is needed to
 be able to test results returned from Elasticsearch.
 
-To start the test cluster download correct Elasticsearch version from https://www.elastic.co/downloads/elasticsearch, then go to https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions#testcluster and follow instructions have to setup proper ENV variables.
+##### Setup Test Cluster
+
+Start by installing Elasticsearch Extensions gem.
+
+```ruby
+# Gemfile
+gem "elasticsearch-extensions"
+```
+
+Download correct Elasticsearch version from [https://www.elastic.co/downloads/elasticsearch](https://www.elastic.co/downloads/elasticsearch) and put it somewhere inside your `tmp` folder.
+
+Then add needed environment variables to your .env file. For example:
+
+```
+TEST_CLUSTER_NAME=my-cs-app-testing-cluster
+TEST_CLUSTER_COMMAND="/path/to/your/app/tmp/elasticsearch-7.5.1/bin/elasticsearch"
+TEST_CLUSTER_PORT=9350
+TEST_CLUSTER_NODES=2
+```
+
+Now you can start / stop the cluster.
+
+```
+bundle exec elasticsearch-test-cluster start # start the cluster
+bundle exec elasticsearch-test-cluster stop # stop the cluster
+bundle exec elasticsearch-test-cluster status # check if cluster is running
+```
+ For more info go to [https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions#testcluster](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions#testcluster).
 

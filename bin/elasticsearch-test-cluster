@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require "dotenv"
+Dotenv.load
+
+action = ARGV[0]
+raise "Action not provided. Usage `bundle exec elasticsearch-test-cluster (start|stop|status)`" if action.nil?
+
+require 'elasticsearch/extensions/test/cluster'
+
+if action == "status"
+  puts Elasticsearch::Extensions::Test::Cluster.running? ? "Test cluster is running" : "Test cluster is NOT running"
+else
+  Elasticsearch::Extensions::Test::Cluster.public_send(action)
+end

@@ -19,7 +19,9 @@ Gem::Specification.new do |spec|
   end
 
   spec.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "README.md"]
+  spec.executables = ["elasticsearch-test-cluster"]
   spec.add_dependency 'climate_control', '>= 0.2'
+  spec.add_dependency 'dotenv'
   spec.add_dependency 'jwt', '~> 2.1.0'
   spec.add_dependency 'minitest-hooks', '>= 1'
   spec.add_dependency 'rails', '>= 5.2.3'
