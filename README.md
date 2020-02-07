@@ -131,7 +131,7 @@ gem "elasticsearch-extensions"
 
 Download correct Elasticsearch version from [https://www.elastic.co/downloads/elasticsearch](https://www.elastic.co/downloads/elasticsearch) and put it somewhere inside your `tmp` folder.
 
-Then add needed environment variables to your .env file. For example:
+Then add needed environment variables to your `.env.test.local` file. For example:
 
 ```
 TEST_CLUSTER_NAME=my-cs-app-testing-cluster
