@@ -70,6 +70,18 @@ get "/something", headers: { "Authorization" => "Invalid token" }
 get "/something", headers: { "Authorization" => nil }
 ```
 
+### Stacker events
+
+Integration tests will have `stacker_events` helper method that will return array of stacker events that are sent as a header.
+
+
+```ruby
+test "some action that sets stacker event header" do
+  get "/something"
+  assert stacker_events.include?('select Radius {"distance": 123}')
+end
+```
+
 ### Elasticsearch
 
 This gem offers two ways of testing Elasticsearch related scenarios. In most cases you should go with stubbing the ES calls cause it is much faster and simpler.
@@ -147,5 +159,7 @@ bundle exec elasticsearch-test-cluster start # start the cluster
 bundle exec elasticsearch-test-cluster stop # stop the cluster
 bundle exec elasticsearch-test-cluster status # check if cluster is running
 ```
- For more info go to [https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions#testcluster](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions#testcluster).
 
+ For more info go to [https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions#testcluster](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions#testcluster)
+
+TODO: Auto setup this on CirlceCI. I think it should just work with defaults (without setting any ENV vars) if elasticsearch image is added to config similar how it was done for Borg [https://github.com/betterdoc-org/borg/blob/master/.circleci/config.yml#L20-L24](https://github.com/betterdoc-org/borg/blob/master/.circleci/config.yml#L20-L24)
