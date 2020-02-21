@@ -18,6 +18,19 @@ module Betterdoc
         end
       end
 
+      private
+
+      def stacker_events
+        header = response.headers["X-Stacker-Event"]
+        return [] if header.blank?
+
+        if header.starts_with?("multi-encoded")
+          header.sub("multi-encoded ", "").split(", ").map { |h| Base64.strict_decode64(h) }
+        else
+          [header.sub("simple ", "")]
+        end
+      end
+
       def with_modified_env(options, &block)
         ClimateControl.modify(options, &block)
       end
