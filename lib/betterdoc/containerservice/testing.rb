@@ -1,5 +1,7 @@
-require_relative "testing/integration_test_helper"
+if Rails.env.test?
+  require_relative "testing/integration_test_helper"
 
-class ActionDispatch::IntegrationTest
-  include Betterdoc::Containerservice::IntegrationTestHelper
+  class ActionDispatch::IntegrationTest
+    include Betterdoc::Containerservice::IntegrationTestHelper
+  end
 end
